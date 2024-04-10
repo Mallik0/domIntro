@@ -1,0 +1,45 @@
+<!-- // connect backend to frontend and perform simple calculations and display it on front end, NOTE that you are not supposed to perform any calcualtions using JS on the front end and only allowed to fetch data from the back end and display it on the front end!!  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // function populateDiv() {
+        //     const a = document.getElementById("firstNumber").value;
+        //     const b = document.getElementById("secondNumber").value;
+
+        //     fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)
+        //         .then(function(response) {
+        //             response.text()
+        //                 .then (function(ans) {
+        //                     document.getElementById("finalSum").innerHTML = ans;
+        //                 });
+        //         });
+        // }
+        
+        // using async await syntax
+
+        async function populateDiv() {
+            const a = document.getElementById("firstNumber").value;        
+            const b = document.getElementById("secondNumber").value;
+            
+            const response = await fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b);
+            const ans = await response.text();
+
+            document.getElementById("finalSum").innerHTML = ans; 
+        }
+
+    </script>
+    <br> 
+    <input id="firstNumber" type="text" placeholder="First Number"> <br> <br>
+    <input id="secondNumber" type="text" placeholder="Second Number"> <br> <br>
+
+    <button onclick="populateDiv()">Calculate Sum</button> <br> <br>
+
+    <div id="finalSum"></div>
+</body>
+</html>

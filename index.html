@@ -1,0 +1,48 @@
+<!-- // connect backend to frontend and perform simple calculations and display it on front end, NOTE that you are not supposed to perform any calcualtions using JS on the front end and only allowed to fetch data from the back end and display it on the front end!!  -->
+
+<!-- In this secton you are not supposed to click the button but as soon as you type the number there should be a db call and the answer should be displayed so that the following condition is satisfied.. i.e whenever a user starts typing initially for every single digit there will be a db call, our motto is to reduce the number of db calls and call only once after the user has stopped typing the whole number and then do a db call and return something and we do this using a concept known as DEBOUNCING, THROTTLING  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        let timeout;    
+        function debouncedPopulateDiv() {
+            // how do you cancel a clock - using clearTimeout()
+
+            clearTimeout(timeout);
+            timeout = setTimeout( function() {
+                populateDiv()
+            }, 1000);
+        }
+
+        function populateDiv() {
+            //debouncing, throtlling
+            const a = document.getElementById("firstNumber").value;
+            const b = document.getElementById("secondNumber").value;
+
+            fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)
+                .then(function(response) {
+                    response.text()
+                        .then (function(ans) {
+                            document.getElementById("finalSum").innerHTML = ans;
+                        });
+                });
+        }
+        
+        
+
+    </script>
+    <br> 
+    <input oninput="debouncedPopulateDiv()" id="firstNumber" type="text" placeholder="First Number"> <br> <br>
+    <input oninput="debouncedPopulateDiv()" id="secondNumber" type="text" placeholder="Second Number"> <br> <br>
+
+    <div id="finalSum"></div>
+</body>
+</html>
